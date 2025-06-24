@@ -46,27 +46,45 @@ This project implements a **Retrieval-Augmented Generation (RAG)** based chatbot
 
 You must pull the language model you'd like to use with Ollama:
 
-```bash
+```
 ollama pull deepseek-r1:1.5b
+```
 # or
+```
 ollama pull llama3
-
+```
+# 3. 🛢️ PostgreSQL + pgvector Setup
+Launch psql and run:
 -- Enable vector extension
+```
 CREATE EXTENSION IF NOT EXISTS vector;
+```
 
 -- Create the database and user
+```
 CREATE DATABASE ragapp;
 CREATE USER amanulla WITH PASSWORD 'aman1234';
 GRANT ALL PRIVILEGES ON DATABASE ragapp TO amanulla;
+```
+No need to create tables manually. The app will auto-generate embedding tables.
 
-spring.application.name=RAG Chatbot
-server.port=8080
+# 4. ⚙️ Configure application.properties
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/ragapp
+spring.datasource.username=your_userName
+spring.datasource.password=password
+spring.datasource.driver-class-name=org.postgresql.Driver
 
-# Ollama model
-ollama.model=deepseek-r1:1.5b
-ollama.base-url=http://localhost:11434
+langchain4j.ollama.chat-model.timeout=180s
+langchain4j.ollama.embedding-model.timeout=180s
 
+logging.level.dev.langchain4j=DEBUG
+logging.level.okhttp3=DEBUG
+logging.level.com.ragApp=DEBUG
+```
+# 5. 🚀 Run the Application
+```
 mvn spring-boot:run
-
+```
 Then, open your browser:
 http://localhost:8080
