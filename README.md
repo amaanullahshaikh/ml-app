@@ -64,7 +64,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 ```
 CREATE DATABASE ragapp;
 CREATE USER user_name WITH PASSWORD 'password';
-GRANT ALL PRIVILEGES ON DATABASE ragapp TO amanulla;
+GRANT ALL PRIVILEGES ON DATABASE ragapp TO user_name;
 ```
 No need to create tables manually. The app will auto-generate embedding tables.
 
